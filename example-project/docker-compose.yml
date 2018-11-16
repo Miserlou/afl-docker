@@ -3,7 +3,7 @@ services:
   primary:
     build: .
     volumes:
-      - afl-results:/results
+      - ./afl-results/:/results
     entrypoint: /usr/local/bin/afl-fuzz
     command: ["-M", "primary", "-i", "/app/tests", "-o", "/results", "/app/maybe-crash"]
 
@@ -13,12 +13,7 @@ services:
   secondary:
     build: .
     volumes:
-      - afl-results:/results
+      - ./afl-results/:/results
     entrypoint: /app/afl-fuzz-secondary
     command: ["-i", "/app/tests", "-o", "/results", "/app/maybe-crash"]
 
-volumes:
-  # Use the following to locate the directory:
-  #   docker volume inspect afl-results | jq '.[] | .Mountpoint'
-  # or docker-cp from an existing container using it.
-  afl-results:

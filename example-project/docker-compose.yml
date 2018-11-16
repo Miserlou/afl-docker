@@ -17,3 +17,10 @@ services:
     entrypoint: /app/afl-fuzz-secondary
     command: ["-i", "/app/tests", "-o", "/results", "/app/maybe-crash"]
 
+# WAY FASTER
+# SLOWER BUT EASIER IF YOU JUST DELETE THIS
+volumes:
+  # Use the following to locate the directory:
+  #   docker volume inspect afl-results | jq '.[] | .Mountpoint'
+  # or docker-cp from an existing container using it.
+  afl-results:

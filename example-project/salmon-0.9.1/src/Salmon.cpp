@@ -44,7 +44,6 @@
 
 #include "GenomicFeature.hpp"
 #include "SalmonConfig.hpp"
-#include "VersionChecker.hpp"
 
 int help(std::vector<std::string> opts) { //}int argc, char* argv[]) {
   fmt::MemoryWriter helpMsg;
@@ -206,7 +205,7 @@ int main(int argc, char* argv[]) {
     }
 
     if (!vm.count("no-version-check")) {
-      std::string versionMessage = getVersionMessage();
+      std::string versionMessage = "getVersionMessage()";
       std::cerr << versionMessage;
     }
 

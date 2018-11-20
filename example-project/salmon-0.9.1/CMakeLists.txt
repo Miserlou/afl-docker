@@ -677,6 +677,8 @@ if (Jemalloc_FOUND)
     set (HAVE_FAST_MALLOC TRUE)
 endif()
 
+set (HAVE_FAST_MALLOC TRUE)
+
 if (NOT HAVE_FAST_MALLOC)
     # See if we have Tcmalloc
     find_package(Tcmalloc)

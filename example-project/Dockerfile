@@ -33,3 +33,10 @@ COPY /tests/ERR1562482_1.fastq /app/tests/ERR1562482_1.fastq
 # Manual notes:
 # Remove Version Checker functions and references in salmon.cpp
 # Remove jemalloc installer check
+
+# TODO:
+# Fuck with the indexes
+# Larger timeouts/get to the meat faster
+# Play with --minAssignedFrags 0
+# Play with parameters in salmon quant --help-alignment
+# Play with `salmon index`

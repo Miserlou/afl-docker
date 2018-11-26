@@ -1,0 +1,27 @@
+version: '3'
+services:
+  primary:
+    build: .
+    volumes:
+      - ./afl-results/:/results
+    entrypoint: /usr/local/bin/afl-fuzz
+    command: ["-M", "primary", "-i", "/app/tests", "-o", "/results", "-m", "100", "--", "/salmon-0.9.1/bin/salmon", "--no-version-check", "quant", "--libType", "A", "-i", "/app/HOMO_SAPIENS_TRANSCRIPTOME_SHORT/", "-r", "@@", "-o", "/tmp"]
+    # /app/Salmon-latest_linux_x86_64/bin/salmon --no-version-check quant --libType A --index /app/HOMO_SAPIENS_TRANSCRIPTOME_SHORT/ -r app/tests/ERR1562482_1.fastq -o /tmp
+
+  # Secondary instances can be used to parallelise a job.
+  # It is necessary that they maintain access to the same output directory (/results).
+  # We can create more fuzzers using '--scale secondary=N', where N > 1.
+  secondary:
+    build: .
+    volumes:
+      - ./afl-results/:/results
+    entrypoint: /app/afl-fuzz-secondary
+    command: ["-i", "/app/tests", "-o", "/results", "-m", "100", "--", "/salmon-0.9.1/bin/salmon", "--no-version-check", "quant", "--libType", "A", "-i", "/app/HOMO_SAPIENS_TRANSCRIPTOME_SHORT/", "-r", "@@", "-o", "/tmp"]
+
+# WAY FASTER
+# SLOWER BUT EASIER IF YOU JUST DELETE THIS
+volumes:
+  # Use the following to locate the directory:
+  #   docker volume inspect afl-results | jq '.[] | .Mountpoint'
+  # or docker-cp from an existing container using it.
+  afl-results:
